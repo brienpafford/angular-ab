@@ -8,22 +8,27 @@ angular
 					{name: 'Adam',
 					 twitter: '@adam',
 					 phone: '1 615 345 2345',
-					 email: 'adam@gmail.com'
+					 email: 'adam@gmail.com',
+					 photo: 'http://i.imgur.com/fsw9I8V.gif'
 					 },
 					{name: 'Brittany',
 					 twitter: '@autoTune',
 					 phone: '1 615 278 3983',
-					 email:  'brittany@bing.com'
+					 email:  'brittany@bing.com',
+					 photo: 'http://i.imgur.com/3Y4UHne.webm'
 					 },
 					{name: 'Caleb',
 					 twitter: '@cmoney',
 					 phone: '1 615 324 5443',
-						email:'cmoney@css.com'
+						email:'cmoney@css.com',
+						photo: 'http://i.imgur.com/YMB5RNRb.jpg'
 					 },
 					{name: 'Danny',
 					 twitter: '@doubletrouble',
 					 phone: '1 234 678 8765',
-						email: 'danny@data.com'
+						email: 'danny@data.com',
+						photo: 'http://i.imgur.com/BohYiTjb.jpg'
+
 					 },
 					{name: 'Elsa',
 					twitter: '@letitgo',
@@ -47,6 +52,7 @@ angular
 		vm.addNewContact = function () {
 			vm.contacts.push(vm.newContact);
 			vm.newContact = {};
+			$('#modal').modal('hide');
 		};
 
 		vm.removeContact = function (contact) {

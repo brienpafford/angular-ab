@@ -10,23 +10,14 @@ html(lang="en-US", ng-app="actionAddressBook")
 		//link(rel="stylesheet", href="//bower_components/skeleton/css/skeleton.css")
 		link(rel="stylesheet", href="css/main.css")
 	body(ng-controller="Main as main")
-		.header
-		h2 Action Address Book
 		.container
-			form(name="newContactForm", ng-submit="newContactForm.$valid && main.addNewContact()", novalidate)
-					label Name
-					input(type="text", placeholder="John Smith", ng-model="main.newContact.name", required)
-					label Phone
-					input(type="text", placeholder="1 615 333 3333", ng-model="main.newContact.phone", required)
-					label Email
-					input(type="text", placeholder="address@gmail.com", ng-model="main.newContact.email", required)
-					label Twitter
-					input(type="text", placeholder="@handle", ng-model="main.newContact.twitter", required)
-					input(type="submit", class="submits" value="Add Contact to ACTION ADDRESS BOOK", ng-disabled="newAddressForm.$invalid")
-				table
+			h2 Action Address Book
+			input(placeholder="Search Address Book", ng-model="query")
+			table.table.table-hover.table-responsive
 					thead
 						tr
 							th
+							th Photo
 							th Name
 							th Phone
 							th Twitter
@@ -34,18 +25,42 @@ html(lang="en-US", ng-app="actionAddressBook")
 					tbody
 						tr(ng-repeat="contact in main.contacts | orderBy: 'name' | filter:query")
 							td
-								button(ng-click="main.removeContact(contact)") X
+								button.btn.btn-xs.btn-danger(ng-click="main.removeContact(contact)") X
 							td
-								{{ contact.name | uppercase}}
+								img(ng-src="{{contact.photo}}")
+							td
+								{{contact.name | uppercase}}
 							td: a(href="tel:{{contact.phone}}")
 								{{contact.phone}}
 							td: a(href="http://twitter.com/{{contact.twitter}}", target="_blank")
 								{{contact.twitter}}
 							td: a(href="email:{{contact.email}}")
 								{{contact.email}}
-
-
-				input(placeholder="Search", ng-model="query")
+			.btn.btn-success(data-toggle="modal", data-target="#modal") New Contact
+			.modal.fade#modal
+				.modal-dialog
+					.modal-content
+						.modal-header
+							button.close(data-dismiss="modal")
+								span &times;
+							h1 New Contact
+						.modal-body
+							form(name="newContactForm", novalidate)
+								.form-group(ng-class="{'has-success': newContactForm.n.$dirty && main.newContact.name.length > 1, 'has-error': newContactForm.n.$dirty && !main.newContact.name}")
+									label.control-label Name
+									input.form-control(name="n", type="text", placeholder="John Smith", ng-model="main.newContact.name", required)
+								.form-group(ng-class="{'has-success': newContactForm.n.$dirty && main.newContact.phone, 'has-error': newContactForm.p.$dirty && !main.newContact.phone}")
+									label.control-label Phone
+									input.form-control(name="p", type="text", placeholder="615-333-3333", ng-model="main.newContact.phone", required)
+								.form-group(ng-class="{'has-success': newContactForm.e.$dirty && main.newContact.email, 'has-error': newContactForm.e.$dirty && !main.newContact.email}")
+									label.control-label Email
+									input.form-control(name="e", type="text", placeholder="address@gmail.com", ng-model="main.newContact.email", required)
+								.form-group(ng-class="{'has-success': newContactForm.t.$dirty && main.newContact.twitter, 'has-error': newContactForm.t.$dirty && !main.newContactForm.twitter}")
+									label.control-label Twitter
+									input.form-control(name="t", type="text", placeholder="@handle", ng-model="main.newContact.twitter", required)
+						.modal-footer
+							button.btn.btn-danger(data-dismiss="modal") Cancel
+							button.btn.btn-primary(ng-click="newContactForm.$valid && main.addNewContact()", ng-disabled="newContactForm.$invalid", data-dismiss="modal") Add Contact to Address Book
 
 		script(src="lib/build.js")
 		script(src="js/main.js")
