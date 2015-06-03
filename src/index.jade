@@ -1,17 +1,51 @@
 doctype html
-html(lang="en-US")
+html(lang="en-US", ng-app="actionAddressBook")
 	head
 		meta(charset="utf-8")
 		meta(http-equiv="X-UA-Compatible", content="IE=edge")
-		meta(name="viewport", content="width=device-width, initial-scare=1")
-		title ANGULAR ADRESS BOOK
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+		title Action Address Book
 		link(rel="stylesheet", href="lib/build.css")
-		link(rel="stylesheet", href="/bower_components/skeleton/css/normalize.css")
-		link(rel="stylesheet", href="/bower_components/skeleton/css/skeleton.css")
+		//link(rel="stylesheet", href="//bower_components/skeleton/css/normalize.css")
+		//link(rel="stylesheet", href="//bower_components/skeleton/css/skeleton.css")
 		link(rel="stylesheet", href="css/main.css")
-	body
+	body(ng-controller="Main as main")
+		.header
+		h2 Action Address Book
 		.container
+			form(name="newContactForm", ng-submit="newContactForm.$valid && main.addNewContact()", novalidate)
+					label Name
+					input(type="text", placeholder="John Smith", ng-model="main.newContact.name", required)
+					label Phone
+					input(type="text", placeholder="1 615 333 3333", ng-model="main.newContact.phone", required)
+					label Email
+					input(type="text", placeholder="address@gmail.com", ng-model="main.newContact.email", required)
+					label Twitter
+					input(type="text", placeholder="@handle", ng-model="main.newContact.twitter", required)
+					input(type="submit", class="submits" value="Add Contact to ACTION ADDRESS BOOK", ng-disabled="newAddressForm.$invalid")
+				table
+					thead
+						tr
+							th
+							th Name
+							th Phone
+							th Twitter
+							th Email
+					tbody
+						tr(ng-repeat="contact in main.contacts | orderBy: 'name' | filter:query")
+							td
+								button(ng-click="main.removeContact(contact)") X
+							td
+								{{ contact.name | uppercase}}
+							td: a(href="tel:{{contact.phone}}")
+								{{contact.phone}}
+							td: a(href="http://twitter.com/{{contact.twitter}}", target="_blank")
+								{{contact.twitter}}
+							td: a(href="email:{{contact.email}}")
+								{{contact.email}}
 
+
+				input(placeholder="Search", ng-model="query")
 
 		script(src="lib/build.js")
 		script(src="js/main.js")
