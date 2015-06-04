@@ -1,9 +1,15 @@
 angular
 	.module('actionAddressBook', [])
 
-	.controller('Main', function() {
+	.controller('Main', function($http) {
 		var vm = this;
 
+		$http.get('https://angular-ab.firebaseio.com/contacts.json')
+		.success(function (data) {
+			vm.contacts = data;
+		});
+
+/*
 		vm.contacts = [
 					{name: 'Adam',
 					 twitter: '@adam',
@@ -46,7 +52,7 @@ angular
 					 email: 'greg@google.com'
 					 },
 					];
-
+*/
 		vm.newContact = {};
 
 		vm.addNewContact = function () {
