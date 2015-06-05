@@ -23,13 +23,13 @@ html(lang="en-US", ng-app="actionAddressBook")
 							th Twitter
 							th Email
 					tbody
-						tr(ng-repeat="contact in main.contacts | orderBy: 'name' | filter:query")
+						tr(ng-repeat="contact in main.contacts| objToArr | orderBy:'name' | filter:query")
 							td
-								button.btn.btn-xs.btn-danger(ng-click="main.removeContact(contact)") X
+								button.btn.btn-xs.btn-danger(ng-click="main.removeContact(contact._id)") X
 							td
 								img(ng-src="{{contact.photo}}")
 							td
-								{{contact.name | uppercase}}
+								{{contact.name | ransomcase}}
 							td: a(href="tel:{{contact.phone}}")
 								{{contact.phone}}
 							td: a(href="http://twitter.com/{{contact.twitter}}", target="_blank")
